@@ -95,15 +95,4 @@ class RepositoryFactoryTest extends BaseTestCase
 
         $factory->getRepository('users');
     }
-
-
-    // Не актуально
-
-    // /**
-    //  * @test
-    //  */
-    // public function helper_function_works_correct()
-    // {
-    //     $this->assertTrue(repository('users') instanceof UserRepository);
-    // }
 }
