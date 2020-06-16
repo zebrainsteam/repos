@@ -167,6 +167,6 @@ class ArrayRepository implements RepositoryInterface
             }
         }
 
-        return $meta;
+        return $meta ?? null;
     }
 }
