@@ -42,9 +42,13 @@ factory = new RepositoryFactory(new HardResolver, [
 use Prozorov\Repositories\RepositoryFactory;
 use Prozorov\Repositories\Resolvers\HardResolver;
 use Prozorov\Repositories\Tests\Support\UserRepository;
+use Prozorov\Repositories\Tests\Support\ProductRepository;
 
 $bindings = [
     'users' => UserRepository::class,
+    'products' => function () {
+        return new ProductRepository();
+    },
 ];
 
 $repositoryFactory = new RepositoryFactory(new HardResolver(), $bindings);
