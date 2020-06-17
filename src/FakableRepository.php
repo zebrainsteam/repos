@@ -196,15 +196,17 @@ abstract class FakableRepository implements RepositoryInterface
      */
     protected function getMeta(Query $query): ?array
     {
-        if ($query->isWithMeta()) {
-            $meta = [
-                'offset' => $query->getOffset(),
-                'limit' => $query->getLimit(),
-            ];
+        if (! $query->isWithMeta()) {
+            return null;
+        }
 
-            if ($query->isCountTotal()) {
-                $meta['total'] = $this->count($filter);
-            }
+        $meta = [
+            'offset' => $query->getOffset(),
+            'limit' => $query->getLimit(),
+        ];
+
+        if ($query->isCountTotal()) {
+            $meta['total'] = $this->count($filter);
         }
 
         return $meta;
