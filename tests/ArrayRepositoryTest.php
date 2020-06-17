@@ -3,7 +3,7 @@
 namespace Prozorov\Repositories\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Prozorov\Repositories\ArrayRepository;
+use Prozorov\Repositories\{ArrayRepository, Query};
 use Prozorov\Repositories\Exceptions\DataNotFound;
 
 class ArrayRepositoryTest extends MockeryTestCase

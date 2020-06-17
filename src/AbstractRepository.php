@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Prozorov\Repositories;
 
 use Prozorov\Repositories\Contracts\RepositoryInterface;
-use Prozorov\Repositories\{Parameters, Result};
+use Prozorov\Repositories\{Query, Result};
 use Prozorov\Repositories\Exceptions\DataNotFound;
 use Prozorov\Repositories\Exceptions\NotImplemented;
 
@@ -50,8 +50,7 @@ abstract class AbstractRepository extends FakableRepository
     /**
      * Returns iterable or null if nothing is found
      * 
-     * @var array $filter
-     * @var Parameters $params
+     * @var Query $query
      */
-    abstract protected function doGet(array $filter, Parameters $params = null);
+    abstract protected function doGet(Query $query);
 }

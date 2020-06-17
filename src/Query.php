@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Prozorov\Repositories;
 
-class Parameters
+class Query
 {
     /**
      * @var integer $limit
@@ -35,6 +35,11 @@ class Parameters
      * @var array $orderBy
      */
     protected $orderBy;
+
+    /**
+     * @var array $filter
+     */
+    protected $filter;
 
     /**
      * Get $countTotal
@@ -101,7 +106,7 @@ class Parameters
      *
      * @return  self
      */ 
-    public function setSelect($select)
+    public function select($select)
     {
         $this->select = $select;
 
@@ -125,7 +130,7 @@ class Parameters
      *
      * @return  self
      */ 
-    public function setOffset(int $offset)
+    public function offset(int $offset)
     {
         $this->offset = $offset;
 
@@ -149,7 +154,7 @@ class Parameters
      *
      * @return  self
      */ 
-    public function setLimit(int $limit)
+    public function limit(int $limit)
     {
         $this->limit = $limit;
 
@@ -173,9 +178,33 @@ class Parameters
      *
      * @return  self
      */ 
-    public function setOrderBy(array $orderBy)
+    public function orderBy(array $orderBy)
     {
         $this->orderBy = $orderBy;
+
+        return $this;
+    }
+
+    /**
+     * Get $filter
+     *
+     * @return  array
+     */ 
+    public function getWhere()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * Set $filter
+     *
+     * @param  array  $filter  $filter
+     *
+     * @return  self
+     */ 
+    public function where(array $filter)
+    {
+        $this->filter = $filter;
 
         return $this;
     }

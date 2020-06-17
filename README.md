@@ -4,7 +4,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/artem-prozorov/repos/badges/build.png?b=master)](https://scrutinizer-ci.com/g/artem-prozorov/repos/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/artem-prozorov/repos/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
-Easy and flexible data storage abstraction layer for your application. No hard dependencies for any framework!
+Easy and flexible test-first data storage abstraction layer for your application. No hard dependencies for any framework!
 
 ## Documentation
 

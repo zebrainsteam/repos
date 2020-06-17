@@ -3,7 +3,7 @@
 namespace Prozorov\Repositories\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Prozorov\Repositories\RepositoryFactory;
+use Prozorov\Repositories\{Query, RepositoryFactory};
 use Prozorov\Repositories\Resolvers\HardResolver;
 use Prozorov\Repositories\Tests\Support\FakableProductRepository;
 
@@ -38,13 +38,13 @@ class FakableTest extends MockeryTestCase
 
         $repo = $factory->getRepository('products');
 
-        $this->assertEquals($expected, $repo->get([])->getData());
+        $this->assertEquals($expected, $repo->get(new Query())->getData());
 
         $factory->loadFixtures('products', $faked);
 
         $repo = $factory->getRepository('products');
 
-        $this->assertEquals($faked, $repo->get([])->getData());
+        $this->assertEquals($faked, $repo->get(new Query())->getData());
         $this->assertEquals($faked[0], $repo->getById(70));
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Prozorov\Repositories\Contracts;
 
-use Prozorov\Repositories\{Parameters, Result};
+use Prozorov\Repositories\{Query, Result};
 
 interface RepositoryInterface
 {
@@ -12,10 +12,10 @@ interface RepositoryInterface
      * Get records
      *
      * @access	public
-     * @param	array	$params	
+     * @param	Query	$params	
      * @return	void
      */
-    public function get(array $filter, Parameters $params = null): Result;
+    public function get(Query $query): Result;
 
     /**
      * Get first record

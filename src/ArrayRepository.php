@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Prozorov\Repositories;
 
 use Prozorov\Repositories\Contracts\RepositoryInterface;
-use Prozorov\Repositories\{Parameters, Result};
+use Prozorov\Repositories\{Query, Result};
 use Prozorov\Repositories\Exceptions\DataNotFound;
 use Illuminate\Support\Collection;
 
@@ -60,7 +60,7 @@ class ArrayRepository implements RepositoryInterface
      */
     public function exists(array $filter): bool
     {
-        $data = $this->getRaw($filter);
+        $data = $this->getRaw((new Query())->where($filter));
 
         return ! empty($data);
     }
@@ -70,7 +70,7 @@ class ArrayRepository implements RepositoryInterface
      */
     public function count(array $filter = []): int
     {
-        $data = $this->getRaw($filter);
+        $data = $this->getRaw((new Query())->where($filter));
 
         return count($data);
     }
@@ -78,11 +78,11 @@ class ArrayRepository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function get(array $filter, Parameters $params = null): Result
+    public function get(Query $query): Result
     {
         return new Result(
-            $this->getRaw($filter, $params),
-            $this->getMeta($params)
+            $this->getRaw($query),
+            $this->getMeta($query)
         );
     }
 
@@ -91,7 +91,7 @@ class ArrayRepository implements RepositoryInterface
      */
     public function first(array $filter)
     {
-        $data = $this->getRaw($filter, (new Parameters())->setLimit(1));
+        $data = $this->getRaw((new Query())->where($filter)->limit(1));
 
         if (empty($data[0])) {
             return null;
@@ -126,16 +126,15 @@ class ArrayRepository implements RepositoryInterface
      * Returns raw data
      *
      * @access	protected
-     * @param	array     	$filter	
-     * @param	Parameters	$params	Default: null
+     * @param	Query	$query	
      * @return	iterable|null
      */
-    protected function getRaw(array $filter, Parameters $params = null)
+    protected function getRaw(Query $query)
     {
         $data = $this->data;
 
-        if (! empty($filter)) {
-            foreach ($filter as $key => $value) {
+        if (! empty($query->getWhere())) {
+            foreach ($query->getWhere() as $key => $value) {
                 $data = $this->data->where($key, $value);
             }
         }
@@ -147,23 +146,19 @@ class ArrayRepository implements RepositoryInterface
      * Calculate meta information
      * 
      * @access	protected
-     * @param	Parameters	$params	Default: null
+     * @param	Query	$query
      * @return	array|null
      */
-    protected function getMeta(Parameters $params = null): ?array
+    protected function getMeta(Query $query): ?array
     {
-        if (empty($params)) {
-            return null;
-        }
-
-        if ($params->isWithMeta()) {
+        if ($query->isWithMeta()) {
             $meta = [
-                'offset' => $params->getOffset(),
-                'limit' => $params->getLimit(),
+                'offset' => $query->getOffset(),
+                'limit' => $query->getLimit(),
             ];
 
-            if ($params->isCountTotal()) {
-                $meta['total'] = $this->count($filter);
+            if ($query->isCountTotal()) {
+                $meta['total'] = $this->count($query->getWhere());
             }
         }
 

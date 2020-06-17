@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Prozorov\Repositories;
 
 use Prozorov\Repositories\Contracts\RepositoryInterface;
-use Prozorov\Repositories\{Parameters, Result};
+use Prozorov\Repositories\{Query, Result};
 use Prozorov\Repositories\Exceptions\DataNotFound;
 use Prozorov\Repositories\Exceptions\NotImplemented;
 
@@ -50,10 +50,9 @@ abstract class FakableRepository implements RepositoryInterface
     /**
      * Returns iterable or null if nothing is found
      * 
-     * @var array $filter
-     * @var Parameters $params
+     * @var Query $params
      */
-    abstract protected function doGet(array $filter, Parameters $params = null);
+    abstract protected function doGet(Query $query);
 
     /**
      * @inheritDoc
@@ -118,15 +117,15 @@ abstract class FakableRepository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function get(array $filter, Parameters $params = null): Result
+    public function get(Query $query): Result
     {
         if ($this->isFake()) {
-            return $this->fixtures()->get($filter, $params);
+            return $this->fixtures()->get($query);
         }
 
         return new Result(
-            $this->getRaw($filter, $params),
-            $this->getMeta($params)
+            $this->getRaw($query),
+            $this->getMeta($query)
         );
     }
 
@@ -135,7 +134,7 @@ abstract class FakableRepository implements RepositoryInterface
      */
     public function first(array $filter)
     {
-        $data = $this->getRaw($filter, (new Parameters())->setLimit(1));
+        $data = $this->getRaw((new Query())->where($filter)->limit(1));
 
         if (empty($data[0])) {
             return null;
@@ -149,7 +148,7 @@ abstract class FakableRepository implements RepositoryInterface
      */
     public function getById(int $id, array $select = null)
     {
-        $data = $this->getRaw(['id' => $id], (new Parameters())->setLimit(1)->setSelect($select));
+        $data = $this->getRaw((new Query())->where(['id' => $id])->limit(1)->select($select));
 
         if (empty($data[0])) {
             return null;
@@ -176,39 +175,34 @@ abstract class FakableRepository implements RepositoryInterface
      * Returns raw data
      *
      * @access	protected
-     * @param	array     	$filter	
-     * @param	Parameters	$params	Default: null
+     * @param	Query	$query
      * @return	iterable|null
      */
-    protected function getRaw(array $filter, Parameters $params = null)
+    protected function getRaw(Query $query)
     {
         if ($this->isFake()) {
-            return $this->fixtures()->get($filter, $params)->getData();
+            return $this->fixtures()->get($query)->getData();
         }
 
-        return $this->doGet($filter, $params);
+        return $this->doGet($query);
     }
 
     /**
      * Calculate meta information
      * 
      * @access	protected
-     * @param	Parameters	$params	Default: null
+     * @param	Query	$query
      * @return	array|null
      */
-    protected function getMeta(Parameters $params = null): ?array
+    protected function getMeta(Query $query): ?array
     {
-        if (empty($params)) {
-            return null;
-        }
-
-        if ($params->isWithMeta()) {
+        if ($query->isWithMeta()) {
             $meta = [
-                'offset' => $params->getOffset(),
-                'limit' => $params->getLimit(),
+                'offset' => $query->getOffset(),
+                'limit' => $query->getLimit(),
             ];
 
-            if ($params->isCountTotal()) {
+            if ($query->isCountTotal()) {
                 $meta['total'] = $this->count($filter);
             }
         }

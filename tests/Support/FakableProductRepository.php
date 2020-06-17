@@ -3,7 +3,7 @@
 namespace Prozorov\Repositories\Tests\Support;
 
 use Prozorov\Repositories\AbstractRepository;
-use Prozorov\Repositories\Parameters;
+use Prozorov\Repositories\Query;
 use Prozorov\Repositories\Result;
 
 class FakableProductRepository extends AbstractRepository
@@ -41,7 +41,7 @@ class FakableProductRepository extends AbstractRepository
         return false;
     }
 
-    protected function doGet(array $filter, Parameters $params = null)
+    protected function doGet(Query $query)
     {
         // No need to implement filtering
         return $this->data;
