@@ -186,7 +186,7 @@ abstract class FakableRepository implements RepositoryInterface
             return $this->fixtures()->get($filter, $params)->getData();
         }
 
-        return $this->doGet($filter);
+        return $this->doGet($filter, $params);
     }
 
     /**
