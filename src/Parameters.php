@@ -32,6 +32,11 @@ class Parameters
     protected $countTotal = false;
 
     /**
+     * @var array $orderBy
+     */
+    protected $orderBy;
+
+    /**
      * Get $countTotal
      *
      * @return  bool
@@ -147,6 +152,30 @@ class Parameters
     public function setLimit(int $limit)
     {
         $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * Get $orderBy
+     *
+     * @return  array
+     */ 
+    public function getOrderBy()
+    {
+        return $this->orderBy;
+    }
+
+    /**
+     * Set $orderBy
+     *
+     * @param  array  $orderBy  $orderBy
+     *
+     * @return  self
+     */ 
+    public function setOrderBy(array $orderBy)
+    {
+        $this->orderBy = $orderBy;
 
         return $this;
     }
