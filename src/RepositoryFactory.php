@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Prozorov\Repositories;
 
 use Prozorov\Repositories\Contracts\{FixtureResolverInterface, RepositoryInterface, ResolverInterface};
-use Prozorov\Repositories\Exceptions\ImplementationMissing;
 use Prozorov\Repositories\Exceptions\CouldNotResolve;
 use Mockery;
 
@@ -148,14 +147,7 @@ class RepositoryFactory
      */
     protected function getSolid(string $code): string
     {
-        if (empty($this->bindings[$code])) {
-            $exception = new ImplementationMissing();
-            $exception->setRepositoryCode($code);
-
-            throw $exception;
-        }
-
-        $solid = $this->bindings[$code];
+        $solid = $this->bindings[$code] ?? $code;
 
         if (is_callable($solid)) {
             return $this->resolveCallable($code, $solid);

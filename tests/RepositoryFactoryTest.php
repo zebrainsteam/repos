@@ -3,7 +3,7 @@
 namespace Prozorov\Repositories\Tests;
 
 use Prozorov\Repositories\Tests\Support\UserRepository;
-use Prozorov\Repositories\Exceptions\{CouldNotResolve, ImplementationMissing};
+use Prozorov\Repositories\Exceptions\CouldNotResolve;
 use Prozorov\Repositories\RepositoryFactory;
 use Prozorov\Repositories\Resolvers\HardResolver;
 use Prozorov\Repositories\ArrayRepository;
@@ -36,7 +36,7 @@ class RepositoryFactoryTest extends BaseTestCase
      */
     public function exception_is_thrown_if_cannot_find_implementation()
     {
-        $this->expectException(ImplementationMissing::class);
+        $this->expectException(CouldNotResolve::class);
 
         $nonExistentRepository = $this->factory->getRepository('not-resolved repository');
     }
