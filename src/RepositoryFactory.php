@@ -66,6 +66,92 @@ class RepositoryFactory
     }
 
     /**
+     * getResolvedInstance.
+     *
+     * @access	protected
+     * @param	string	$code	
+     * @return	string
+     */
+    protected function getSolid(string $code): string
+    {
+        $solid = $this->bindings[$code] ?? $code;
+
+        if (is_callable($solid)) {
+            return $this->resolveCallable($code, $solid);
+        }
+
+        return $solid;
+    }
+
+    /**
+     * Resolves callable
+     *
+     * @access	protected
+     * @param	string  	$code 	
+     * @param	callable	$solid	
+     * @return	string
+     */
+    protected function resolveCallable(string $code, callable $solid): string
+    {
+        if (empty($this->resolved[$code])) {
+            $resolved = $solid();
+
+            if (! ($resolved instanceof RepositoryInterface)) {
+                $exception = new CouldNotResolve();
+                $exception->setRepositoryCode($code);
+
+                throw $exception;
+            }
+
+            $this->resolved[$code] = $solid();
+        }
+
+        return $code;
+    }
+
+    /**
+     * Clears resolved instance
+     *
+     * @access	public
+     * @param	string	$code
+     * @return	void
+     */
+    public function reset(string $code): void
+    {
+        unset($this->resolved[$code]);
+    }
+
+    /**
+     * Clears resolved instance
+     *
+     * @access	public
+     * @return	void
+     */
+    public function resetAll(): void
+    {
+        foreach ($this->resolved as $repository) {
+            unset($repository);
+        }
+    }
+
+    /**
+     * getFixtureResolver.
+     *
+     * @access	protected
+     * @return	FixtureResolverInterface
+     */
+    protected function getFixtureResolver(): FixtureResolverInterface
+    {
+        if (empty($this->fixtureResolver)) {
+            $this->fixtureResolver = new $this->fixtureResolverClass;
+        }
+
+        // Assert $this->fixtureResolver implements FixtureResolverInterface
+
+        return $this->fixtureResolver;
+    }
+
+    /**
      * mock.
      *
      * @access	public
@@ -111,91 +197,5 @@ class RepositoryFactory
 
         $this->resolved[$solid]->shouldReceive('isFake')->andReturn(true);
         $this->resolved[$solid]->shouldReceive('fixtures')->andReturn($fixtures);
-    }
-
-    /**
-     * Clears resolved instance
-     *
-     * @access	public
-     * @param	string	$code
-     * @return	void
-     */
-    public function reset(string $code): void
-    {
-        unset($this->resolved[$code]);
-    }
-
-    /**
-     * Clears resolved instance
-     *
-     * @access	public
-     * @return	void
-     */
-    public function resetAll(): void
-    {
-        foreach ($this->resolved as $repository) {
-            unset($repository);
-        }
-    }
-
-    /**
-     * getResolvedInstance.
-     *
-     * @access	protected
-     * @param	string	$code	
-     * @return	string
-     */
-    protected function getSolid(string $code): string
-    {
-        $solid = $this->bindings[$code] ?? $code;
-
-        if (is_callable($solid)) {
-            return $this->resolveCallable($code, $solid);
-        }
-
-        return $solid;
-    }
-
-    /**
-     * Resolves callable
-     *
-     * @access	protected
-     * @param	string  	$code 	
-     * @param	callable	$solid	
-     * @return	string
-     */
-    protected function resolveCallable(string $code, callable $solid): string
-    {
-        if (empty($this->resolved[$code])) {
-            $resolved = $solid();
-
-            if (! ($resolved instanceof RepositoryInterface)) {
-                $exception = new CouldNotResolve();
-                $exception->setRepositoryCode($code);
-
-                throw $exception;
-            }
-
-            $this->resolved[$code] = $solid();
-        }
-
-        return $code;
-    }
-
-    /**
-     * getFixtureResolver.
-     *
-     * @access	protected
-     * @return	FixtureResolverInterface
-     */
-    protected function getFixtureResolver(): FixtureResolverInterface
-    {
-        if (empty($this->fixtureResolver)) {
-            $this->fixtureResolver = new $this->fixtureResolverClass;
-        }
-
-        // Assert $this->fixtureResolver implements FixtureResolverInterface
-
-        return $this->fixtureResolver;
     }
 }
