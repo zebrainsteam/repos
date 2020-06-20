@@ -30,4 +30,6 @@ trait HasMeta
 
         return $meta ?? null;
     }
+
+    abstract public function count(array $filter = []): int;
 }
