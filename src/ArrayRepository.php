@@ -158,7 +158,7 @@ class ArrayRepository implements RepositoryInterface
             ];
 
             if ($query->isCountTotal()) {
-                $meta['total'] = $this->count($query->getWhere());
+                $meta['total'] = $this->count($query->getWhere() ?? []);
             }
         }
 

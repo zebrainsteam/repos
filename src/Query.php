@@ -54,13 +54,11 @@ class Query
     /**
      * Set $countTotal
      *
-     * @param  bool  $countTotal
-     *
      * @return  self
      */ 
-    public function countTotal(bool $countTotal)
+    public function countTotal()
     {
-        $this->countTotal = $countTotal;
+        $this->countTotal = true;
 
         return $this;
     }
@@ -78,13 +76,11 @@ class Query
     /**
      * Set $withMeta
      *
-     * @param  bool  $withMeta
-     *
      * @return  self
      */ 
-    public function withMeta(bool $withMeta)
+    public function withMeta()
     {
-        $this->withMeta = $withMeta;
+        $this->withMeta = true;
 
         return $this;
     }

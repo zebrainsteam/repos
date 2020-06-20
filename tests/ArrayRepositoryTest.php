@@ -113,6 +113,24 @@ class ArrayRepositoryTest extends MockeryTestCase
     }
 
     /**
+     * @test
+     */
+    public function meta_is_correct()
+    {
+        $repo = new ArrayRepository($this->getData());
+
+        $result = $repo->get((new Query())->withMeta()->countTotal());
+
+        $expected = [
+            'offset' => 0,
+            'limit' => 20,
+            'total' => count($this->getData()),
+        ];
+
+        $this->assertEquals($expected, $result->getMeta());
+    }
+
+    /**
      * getData.
      *
      * @access	protected
