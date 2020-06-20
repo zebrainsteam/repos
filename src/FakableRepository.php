@@ -206,7 +206,7 @@ abstract class FakableRepository implements RepositoryInterface
         ];
 
         if ($query->isCountTotal()) {
-            $meta['total'] = $this->count($filter);
+            $meta['total'] = $this->count($query->getWhere() ?? []);
         }
 
         return $meta;
