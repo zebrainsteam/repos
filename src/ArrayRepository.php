@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Prozorov\Repositories;
 
 use Prozorov\Repositories\Contracts\RepositoryInterface;
+use Prozorov\Repositories\Traits\HasMeta;
 use Prozorov\Repositories\{Query, Result};
 use Prozorov\Repositories\Exceptions\DataNotFound;
 use Illuminate\Support\Collection;
 
 class ArrayRepository implements RepositoryInterface
 {
+    use HasMeta;
+
     /**
      * @var Collection $data
      */
@@ -140,28 +143,5 @@ class ArrayRepository implements RepositoryInterface
         }
 
         return $data->values()->toArray();
-    }
-
-    /**
-     * Calculate meta information
-     * 
-     * @access	protected
-     * @param	Query	$query
-     * @return	array|null
-     */
-    protected function getMeta(Query $query): ?array
-    {
-        if ($query->isWithMeta()) {
-            $meta = [
-                'offset' => $query->getOffset(),
-                'limit' => $query->getLimit(),
-            ];
-
-            if ($query->isCountTotal()) {
-                $meta['total'] = $this->count($query->getWhere() ?? []);
-            }
-        }
-
-        return $meta ?? null;
     }
 }

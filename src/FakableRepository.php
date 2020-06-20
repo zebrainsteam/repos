@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Prozorov\Repositories;
 
 use Prozorov\Repositories\Contracts\RepositoryInterface;
+use Prozorov\Repositories\Traits\HasMeta;
 use Prozorov\Repositories\{Query, Result};
 use Prozorov\Repositories\Exceptions\DataNotFound;
 use Prozorov\Repositories\Exceptions\NotImplemented;
 
 abstract class FakableRepository implements RepositoryInterface
 {
+    use HasMeta;
+
     /**
      * Creates data
      * 
@@ -185,31 +188,6 @@ abstract class FakableRepository implements RepositoryInterface
         }
 
         return $this->doGet($query);
-    }
-
-    /**
-     * Calculate meta information
-     * 
-     * @access	protected
-     * @param	Query	$query
-     * @return	array|null
-     */
-    protected function getMeta(Query $query): ?array
-    {
-        if (! $query->isWithMeta()) {
-            return null;
-        }
-
-        $meta = [
-            'offset' => $query->getOffset(),
-            'limit' => $query->getLimit(),
-        ];
-
-        if ($query->isCountTotal()) {
-            $meta['total'] = $this->count($query->getWhere() ?? []);
-        }
-
-        return $meta;
     }
 
     /**
