@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Prozorov\Repositories\Contracts;
 
-use Prozorov\Repositories\{Query, Result};
-
 interface RepositoryInterface
 {
     /**
      * Get records
      *
      * @access	public
-     * @param	Query	$params	
+     * @param	mixed	$params	
      * @return	void
      */
-    public function get(Query $query): Result;
+    public function get($params): iterable;
 
     /**
      * Get first record
@@ -32,7 +30,7 @@ interface RepositoryInterface
      * @access	public
      * @param	int  	$id    	
      * @param	array	$select	Default: null
-     * @return	void
+     * @return	mixed
      */
     public function getById(int $id, array $select = null);
 
@@ -42,7 +40,7 @@ interface RepositoryInterface
      * @access	public
      * @param	int  	$id    	
      * @param	array	$select	Default: null
-     * @return	void
+     * @return	mixed
      */
     public function getByIdOrFail(int $id, array $select = null);
 
@@ -51,6 +49,7 @@ interface RepositoryInterface
      *
      * @param array $data
      * @param array|null $guarded
+     * @throws ???
      * @return mixed
      */
     public function create(array $data);
@@ -60,6 +59,7 @@ interface RepositoryInterface
      *
      * @param $model
      * @param array $data
+     * @throws ???
      * @return void
      */
     public function update($model, array $data): void;
@@ -69,6 +69,7 @@ interface RepositoryInterface
      *
      * @access	public
      * @param	int	$id	
+     * @throws ???
      * @return	void
      */
     public function delete(int $id): void;
@@ -89,4 +90,31 @@ interface RepositoryInterface
      * @return	int
      */
     public function count(array $filter = []): int;
+
+    /**
+     * Open transaction
+     *
+     * @access	public
+     * @throws  ???
+     * @return	void
+     */
+    public function openTransaction(): void;
+
+    /**
+     * Commit transaction if one exists
+     *
+     * @access	public
+     * @throws  ???
+     * @return	void
+     */
+    public function commitTransaction(): void;
+
+    /**
+     * Rollback transaction if one exists
+     *
+     * @access	public
+     * @throws  ???
+     * @return	void
+     */
+    public function rollbackTransaction(): void;
 }
