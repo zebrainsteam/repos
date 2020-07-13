@@ -191,7 +191,7 @@ class RepositoryFactory
 
         $this->mock($code);
 
-        // Assert $code is a FakableRepository
+        // Assert $code is a FixturableRepository
 
         $fixtures = $this->getFixtureResolver()->getFixtures($fixtures);
 

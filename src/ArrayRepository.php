@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Prozorov\Repositories;
 
 use Prozorov\Repositories\Contracts\RepositoryInterface;
-use Prozorov\Repositories\Traits\HasMeta;
-use Prozorov\Repositories\{Query, Result};
-use Prozorov\Repositories\Exceptions\DataNotFound;
+use Prozorov\Repositories\Query;
+use Prozorov\Repositories\Exceptions\{DataNotFound, RepositoryException};
+use Prozorov\Repositories\Helpers\DuckTyper;
 use Illuminate\Support\Collection;
 
 class ArrayRepository implements RepositoryInterface
 {
-    use HasMeta;
-
     /**
      * @var Collection $data
      */
@@ -23,6 +21,11 @@ class ArrayRepository implements RepositoryInterface
      * @var string $idField
      */
     protected $idField;
+
+    /**
+     * @var Collection $dataCopy
+     */
+    protected $dataCopy;
 
     public function __construct(array $data, string $idField = 'id')
     {
@@ -43,18 +46,20 @@ class ArrayRepository implements RepositoryInterface
      */
     public function update($model, array $data): void
     {
-        if (is_int($model)) {
-            $model = $this->data->get($model);
+        $id = is_int($model) ? $model : DuckTyper::getId($model, $this->idField);
 
-            $this->data->put($model[$this->idField], array_merge($model, $data));
-        }
+        $model = $this->data->get($id);
+
+        $this->data->put($model[$this->idField], array_merge($model, $data));
     }
 
     /**
      * @inheritDoc
      */
-    public function delete(int $id): void
+    public function delete($model): void
     {
+        $id = is_int($model) ? $model : DuckTyper::getId($model, $this->idField);
+
         $this->data->forget($id);
     }
 
@@ -81,12 +86,9 @@ class ArrayRepository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function get(Query $query): Result
+    public function get($params): ?iterable
     {
-        return new Result(
-            $this->getRaw($query),
-            $this->getMeta($query)
-        );
+        return $this->getRaw($params);
     }
 
     /**
@@ -126,6 +128,40 @@ class ArrayRepository implements RepositoryInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function openTransaction(): void
+    {
+        if ($this->dataCopy !== null) {
+            throw new RepositoryException('Array repository does not support nested transactions');
+        }
+
+        $this->dataCopy = clone $this->data;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function commitTransaction(): void
+    {
+        $this->assertTransactionIsOpened();
+
+        unset($this->dataCopy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function rollbackTransaction(): void
+    {
+        $this->assertTransactionIsOpened();
+
+        $this->data = $this->dataCopy;
+
+        unset($this->dataCopy);
+    }
+
+    /**
      * Returns raw data
      *
      * @access	protected
@@ -143,5 +179,18 @@ class ArrayRepository implements RepositoryInterface
         }
 
         return $data->values()->toArray();
+    }
+
+    /**
+     * assertTransactionIsOpened.
+     *
+     * @access	protected
+     * @return	void
+     */
+    protected function assertTransactionIsOpened(): void
+    {
+        if ($this->dataCopy === null) {
+            throw new RepositoryException('No transaction has been opened');
+        }
     }
 }

@@ -87,16 +87,43 @@ class ArrayRepositoryTest extends MockeryTestCase
     {
         $repo = new ArrayRepository($this->getData());
 
-        $expected = [
-            'id' => 1,
-            'first_name' => 'Ivan',
-            'last_name' => 'Ivanov',
-            'position' => 'president',
-        ];
+        $repo->update(1, ['position' => 'president']);
+
+        $this->assertEquals($this->getUpdatedData(), $repo->getById(1));
+    }
+
+    /**
+     * @test
+     */
+    public function transaction_rolls_back()
+    {
+        $repo = new ArrayRepository($this->getData());
+
+        $repo->openTransaction();
 
         $repo->update(1, ['position' => 'president']);
 
-        $this->assertEquals($expected, $repo->getById(1));
+        $this->assertEquals($this->getUpdatedData(), $repo->getById(1));
+
+        $repo->rollbackTransaction();
+
+        $this->assertEquals($this->getData()[0], $repo->getById(1));
+    }
+
+    /**
+     * @test
+     */
+    public function transaction_is_committed()
+    {
+        $repo = new ArrayRepository($this->getData());
+
+        $repo->openTransaction();
+
+        $repo->update(1, ['position' => 'president']);
+
+        $repo->commitTransaction();
+
+        $this->assertEquals($this->getUpdatedData(), $repo->getById(1));
     }
 
     /**
@@ -112,23 +139,28 @@ class ArrayRepositoryTest extends MockeryTestCase
         $this->assertEmpty($repo->getById(1));
     }
 
-    /**
-     * @test
-     */
-    public function meta_is_correct()
-    {
-        $repo = new ArrayRepository($this->getData());
+    // /**
+    //  * @test
+    //  */
+    // public function transaction_is_commited()
+    // {
+    //     $repo = new ArrayRepository($this->getData());
 
-        $result = $repo->get((new Query())->withMeta()->countTotal());
+    //     $repo->openTransaction();
 
-        $expected = [
-            'offset' => 0,
-            'limit' => 20,
-            'total' => count($this->getData()),
-        ];
+    //     $expected = [
+    //         'id' => 1,
+    //         'first_name' => 'Ivan',
+    //         'last_name' => 'Ivanov',
+    //         'position' => 'president',
+    //     ];
 
-        $this->assertEquals($expected, $result->getMeta());
-    }
+    //     $repo->update(1, ['position' => 'president']);
+
+        
+
+    //     $this->assertEquals($expected, $repo->getById(1));
+    // }
 
     /**
      * getData.
@@ -157,6 +189,22 @@ class ArrayRepositoryTest extends MockeryTestCase
                 'last_name' => 'Sidorov',
                 'position' => 'manager',
             ],
+        ];
+    }
+
+    /**
+     * getUpdatedData.
+     *
+     * @access	protected
+     * @return	array
+     */
+    protected function getUpdatedData(): array
+    {
+        return [
+            'id' => 1,
+            'first_name' => 'Ivan',
+            'last_name' => 'Ivanov',
+            'position' => 'president',
         ];
     }
 }

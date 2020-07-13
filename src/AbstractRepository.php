@@ -9,48 +9,29 @@ use Prozorov\Repositories\{Query, Result};
 use Prozorov\Repositories\Exceptions\DataNotFound;
 use Prozorov\Repositories\Exceptions\NotImplemented;
 
-abstract class AbstractRepository extends FakableRepository
+abstract class AbstractRepository extends FixturableRepository
 {
-    /**
-     * Creates data
-     * 
-     * @var array $data
-     */
+    abstract protected function doGet($params): ?iterable;
+
+    abstract protected function doFirst(array $filter);
+
+    abstract protected function doGetById(int $id, array $select = null);
+
+    abstract protected function doGetByIdOrFail(int $id, array $select = null);
+
     abstract protected function doCreate(array $data);
 
-    /**
-     * Updates the provided model with provided data
-     * 
-     * @var mixed $model
-     * @var array $data
-     */
     abstract protected function doUpdate($model, array $data): void;
 
-    /**
-     * Deletes provided record
-     * 
-     * @var int $id
-     */
-    abstract protected function doDelete(int $id): void;
+    abstract protected function doDelete($model): void;
 
-    /**
-     * Returns count of requested data
-     * 
-     * @var array $filter
-     */
-    abstract protected function doCount(array $filter = []): int;
-
-    /**
-     * Returns true if requested data exists in the repository
-     * 
-     * @var array $filter
-     */
     abstract protected function doExists(array $filter): bool;
 
-    /**
-     * Returns iterable or null if nothing is found
-     * 
-     * @var Query $query
-     */
-    abstract protected function doGet(Query $query);
+    abstract protected function doCount(array $filter = []): int;
+
+    abstract protected function doOpenTransaction(): void;
+
+    abstract protected function doCommitTransaction(): void;
+
+    abstract protected function doRollbackTransaction(): void;
 }
