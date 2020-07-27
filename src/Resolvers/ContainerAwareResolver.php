@@ -34,6 +34,8 @@ class ContainerAwareResolver implements ResolverInterface
                 $message = $class . ' does not implements RepositoryInterface. Refer to documentation';
                 $this->fail($className, $message);
             }
+
+            return $resolved;
         } catch (ContainerExceptionInterface $exception) {
             $this->fail($className, $exception->getMessage());
         }
