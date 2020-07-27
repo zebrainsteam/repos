@@ -24,7 +24,7 @@ class ContainerAwareResolverTest extends MockeryTestCase
     /**
      * @test
      */
-    public function excepton_is_throws_if_not_resolved()
+    public function exception_is_thrown_if_not_resolved()
     {
         $requestedRepository = UserRepository::class;
 
@@ -38,7 +38,7 @@ class ContainerAwareResolverTest extends MockeryTestCase
     /**
      * @test
      */
-    public function excepton_is_throws_if_resolved_not_a_repository()
+    public function exception_is_thrown_if_resolved_not_a_repository()
     {
         $requestedRepository = UserRepository::class;
 
