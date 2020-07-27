@@ -7,7 +7,6 @@ namespace Prozorov\Repositories\Resolvers;
 use Prozorov\Repositories\Contracts\{RepositoryInterface, ResolverInterface};
 use Prozorov\Repositories\Exceptions\CouldNotResolve;
 use Psr\Container\{ContainerInterface, ContainerExceptionInterface};
-use InvalidArgumentException;
 
 class ContainerAwareResolver implements ResolverInterface
 {
@@ -33,19 +32,22 @@ class ContainerAwareResolver implements ResolverInterface
                 $class = get_class($resolved);
 
                 $message = $class . ' does not implements RepositoryInterface. Refer to documentation';
-                $this->fail('Container must return ');
+                $this->fail($className, $message);
             }
+
+            return $resolved;
         } catch (ContainerExceptionInterface $exception) {
-            $this->fail($exception->getMessage());
+            $this->fail($className, $exception->getMessage());
         }
     }
 
     /**
      * fail.
      *
-     * @access	protected
-     * @param	string	$className	
-     * @return	void
+     * @access    protected
+     * @param string $className
+     * @param string $message
+     * @return    void
      */
     protected function fail(string $className, string $message = ''): void
     {
