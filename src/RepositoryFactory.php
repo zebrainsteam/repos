@@ -66,6 +66,79 @@ class RepositoryFactory
     }
 
     /**
+     * Clears resolved instance
+     *
+     * @access	public
+     * @param	string	$code
+     * @return	void
+     */
+    public function reset(string $code): void
+    {
+        unset($this->resolved[$code]);
+    }
+
+    /**
+     * Clears resolved instance
+     *
+     * @access	public
+     * @return	void
+     */
+    public function resetAll(): void
+    {
+        foreach ($this->resolved as $repository) {
+            unset($repository);
+        }
+    }
+
+    /**
+     * mock.
+     *
+     * @access	public
+     * @param	string	$code	
+     * @return	mixed
+     */
+    public function mock(string $code)
+    {
+        $solid = $this->getRepository($code);
+
+        $className = get_class($solid);
+
+        $this->reset($code);
+
+        $solid = $this->getSolid($code);
+
+        $mock = Mockery::mock($className)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->resolved[$solid] = $mock;
+
+        return $this->resolved[$solid];
+    }
+
+    /**
+     * loadFixtures.
+     *
+     * @access	public
+     * @param	string	$code
+     * @param	mixed 	$fixtures
+     * @return	void
+     */
+    public function loadFixtures(string $code, $fixtures): void
+    {
+        $solid = $this->getSolid($code);
+
+        $this->mock($code);
+
+        // todo: Assert $code is a FixturableRepository
+
+        $fixtures = $this->getFixtureResolver()->getFixtures($fixtures);
+
+        $this->resolved[$solid]->shouldReceive('isFake')->andReturn(true);
+        $this->resolved[$solid]->shouldReceive('fixtures')->andReturn($fixtures);
+    }
+
+    /**
      * getResolvedInstance.
      *
      * @access	protected
@@ -110,31 +183,6 @@ class RepositoryFactory
     }
 
     /**
-     * Clears resolved instance
-     *
-     * @access	public
-     * @param	string	$code
-     * @return	void
-     */
-    public function reset(string $code): void
-    {
-        unset($this->resolved[$code]);
-    }
-
-    /**
-     * Clears resolved instance
-     *
-     * @access	public
-     * @return	void
-     */
-    public function resetAll(): void
-    {
-        foreach ($this->resolved as $repository) {
-            unset($repository);
-        }
-    }
-
-    /**
      * getFixtureResolver.
      *
      * @access	protected
@@ -146,56 +194,8 @@ class RepositoryFactory
             $this->fixtureResolver = new $this->fixtureResolverClass;
         }
 
-        // Assert $this->fixtureResolver implements FixtureResolverInterface
+        // todo: Assert $this->fixtureResolver implements FixtureResolverInterface
 
         return $this->fixtureResolver;
-    }
-
-    /**
-     * mock.
-     *
-     * @access	public
-     * @param	string	$code	
-     * @return	mixed
-     */
-    public function mock(string $code)
-    {
-        $solid = $this->getRepository($code);
-
-        $className = get_class($solid);
-
-        $this->reset($code);
-
-        $solid = $this->getSolid($code);
-
-        $mock = Mockery::mock($className)
-            ->makePartial()
-            ->shouldAllowMockingProtectedMethods();
-
-        $this->resolved[$solid] = $mock;
-
-        return $this->resolved[$solid];
-    }
-
-    /**
-     * loadFixtures.
-     *
-     * @access	public
-     * @param	string	$code
-     * @param	mixed 	$fixtures
-     * @return	void
-     */
-    public function loadFixtures(string $code, $fixtures): void
-    {
-        $solid = $this->getSolid($code);
-
-        $this->mock($code);
-
-        // Assert $code is a FixturableRepository
-
-        $fixtures = $this->getFixtureResolver()->getFixtures($fixtures);
-
-        $this->resolved[$solid]->shouldReceive('isFake')->andReturn(true);
-        $this->resolved[$solid]->shouldReceive('fixtures')->andReturn($fixtures);
     }
 }
