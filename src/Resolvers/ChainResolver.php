@@ -21,6 +21,7 @@ class ChainResolver implements ResolverInterface
 
     public function __construct(array $chain)
     {
+        // todo: assert every element in $chain is a resolver
         $this->chain = $chain;
     }
 
