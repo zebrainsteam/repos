@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Prozorov\Repositories\Resolvers;
 
-use Prozorov\Repositories\Contracts\{HasRepository, RepositoryInterface, ResolverInterface};
+use Prozorov\Repositories\Contracts\{HasRepositoryInterface, RepositoryInterface, ResolverInterface};
 use Prozorov\Repositories\Exceptions\CouldNotResolve;
 
 class SelfResolver implements ResolverInterface
@@ -16,7 +16,7 @@ class SelfResolver implements ResolverInterface
     {
         if (class_exists($className)) {
             $model = new $className();
-            if ($model instanceof hasRepository) {
+            if ($model instanceof HasRepositoryInterface) {
                 return $model->getRepository();
             }
         }

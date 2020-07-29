@@ -2,10 +2,10 @@
 
 namespace Prozorov\Repositories\Tests\Support;
 
-use Prozorov\Repositories\Contracts\HasRepository;
+use Prozorov\Repositories\Contracts\HasRepositoryInterface;
 use Prozorov\Repositories\Contracts\RepositoryInterface;
 
-class CategoryModel implements HasRepository
+class CategoryModel implements HasRepositoryInterface
 {
     public function getRepository(): RepositoryInterface
     {

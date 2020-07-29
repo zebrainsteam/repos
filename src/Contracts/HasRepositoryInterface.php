@@ -2,7 +2,7 @@
 
 namespace Prozorov\Repositories\Contracts;
 
-interface HasRepository
+interface HasRepositoryInterface
 {
     /**
      * @return RepositoryInterface
