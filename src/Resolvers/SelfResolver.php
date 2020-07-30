@@ -16,7 +16,7 @@ class SelfResolver implements ResolverInterface
     {
         if (class_exists($className)) {
             if (in_array(HasRepositoryInterface::class, class_implements($className))) {
-                return (new $className())->getRepository();
+                return $className::getRepository();
             }
         }
 
