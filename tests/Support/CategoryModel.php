@@ -7,7 +7,7 @@ use Prozorov\Repositories\Contracts\RepositoryInterface;
 
 class CategoryModel implements HasRepositoryInterface
 {
-    public function getRepository(): RepositoryInterface
+    public static function getRepository(): RepositoryInterface
     {
         return new CategoryRepository();
     }

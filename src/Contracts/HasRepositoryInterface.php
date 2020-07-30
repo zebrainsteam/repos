@@ -7,5 +7,5 @@ interface HasRepositoryInterface
     /**
      * @return RepositoryInterface
      */
-    public function getRepository(): RepositoryInterface;
+    public static function getRepository(): RepositoryInterface;
 }
