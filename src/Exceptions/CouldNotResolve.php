@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories\Exceptions;
+namespace Repositories\Exceptions;
 
 class CouldNotResolve extends RepositoryException
 {

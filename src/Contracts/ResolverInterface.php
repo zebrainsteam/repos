@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories\Contracts;
+namespace Repositories\Contracts;
 
 interface ResolverInterface
 {

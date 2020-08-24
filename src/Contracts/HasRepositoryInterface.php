@@ -1,6 +1,6 @@
 <?php
 
-namespace Prozorov\Repositories\Contracts;
+namespace Repositories\Contracts;
 
 interface HasRepositoryInterface
 {
