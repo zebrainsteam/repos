@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories\Contracts;
+namespace Repositories\Contracts;
 
 interface RepositoryInterface
 {
@@ -49,7 +49,7 @@ interface RepositoryInterface
      *
      * @param array $data
      * @param array|null $guarded
-     * @throws \Prozorov\Repositories\Exceptions\RepositoryException
+     * @throws \Repositories\Exceptions\RepositoryException
      * @return mixed
      */
     public function create(array $data);
@@ -59,7 +59,7 @@ interface RepositoryInterface
      *
      * @param $model
      * @param array $data
-     * @throws \Prozorov\Repositories\Exceptions\RepositoryException
+     * @throws \Repositories\Exceptions\RepositoryException
      * @return void
      */
     public function update($model, array $data): void;
@@ -69,7 +69,7 @@ interface RepositoryInterface
      *
      * @access	public
      * @param	mixed	$model	
-     * @throws \Prozorov\Repositories\Exceptions\RepositoryException
+     * @throws \Repositories\Exceptions\RepositoryException
      * @return	void
      */
     public function delete($model): void;
@@ -95,7 +95,7 @@ interface RepositoryInterface
      * Open transaction
      *
      * @access	public
-     * @throws \Prozorov\Repositories\Exceptions\RepositoryException
+     * @throws \Repositories\Exceptions\RepositoryException
      * @return	void
      */
     public function openTransaction(): void;
@@ -104,7 +104,7 @@ interface RepositoryInterface
      * Commit transaction if one exists
      *
      * @access	public
-     * @throws \Prozorov\Repositories\Exceptions\RepositoryException
+     * @throws \Repositories\Exceptions\RepositoryException
      * @return	void
      */
     public function commitTransaction(): void;
@@ -113,7 +113,7 @@ interface RepositoryInterface
      * Rollback transaction if one exists
      *
      * @access	public
-     * @throws \Prozorov\Repositories\Exceptions\RepositoryException
+     * @throws \Repositories\Exceptions\RepositoryException
      * @return	void
      */
     public function rollbackTransaction(): void;

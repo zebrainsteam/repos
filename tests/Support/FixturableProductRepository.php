@@ -1,8 +1,8 @@
 <?php
 
-namespace Prozorov\Repositories\Tests\Support;
+namespace Repositories\Tests\Support;
 
-use Prozorov\Repositories\AbstractRepository;
+use Repositories\AbstractRepository;
 
 class FixturableProductRepository extends AbstractRepository
 {

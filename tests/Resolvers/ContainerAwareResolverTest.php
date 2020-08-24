@@ -1,13 +1,13 @@
 <?php
 
-namespace Prozorov\Repositories\Tests\Resolvers;
+namespace Repositories\Tests\Resolvers;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Psr\Container\ContainerInterface;
-use Prozorov\Repositories\Resolvers\ContainerAwareResolver;
-use Prozorov\Repositories\Exceptions\CouldNotResolve;
-use Prozorov\Repositories\Tests\Support\UserRepository;
-use Prozorov\Repositories\Tests\Support\SimpleContainer;
+use Repositories\Resolvers\ContainerAwareResolver;
+use Repositories\Exceptions\CouldNotResolve;
+use Repositories\Tests\Support\UserRepository;
+use Repositories\Tests\Support\SimpleContainer;
 use Mockery;
 
 class ContainerAwareResolverTest extends MockeryTestCase

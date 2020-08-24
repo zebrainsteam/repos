@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories\Resolvers;
+namespace Repositories\Resolvers;
 
-use Prozorov\Repositories\Contracts\{RepositoryInterface, ResolverInterface};
-use Prozorov\Repositories\Exceptions\CouldNotResolve;
+use Repositories\Contracts\{RepositoryInterface, ResolverInterface};
+use Repositories\Exceptions\CouldNotResolve;
 use Psr\Container\{ContainerInterface, ContainerExceptionInterface};
 
 class ContainerAwareResolver implements ResolverInterface
