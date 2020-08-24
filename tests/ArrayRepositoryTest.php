@@ -1,10 +1,10 @@
 <?php
 
-namespace Repositories\Tests;
+namespace Prozorov\Repositories\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Repositories\{ArrayRepository, Query};
-use Repositories\Exceptions\DataNotFound;
+use Prozorov\Repositories\{ArrayRepository, Query};
+use Prozorov\Repositories\Exceptions\DataNotFound;
 
 class ArrayRepositoryTest extends MockeryTestCase
 {

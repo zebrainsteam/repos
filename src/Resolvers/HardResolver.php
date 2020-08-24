@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Repositories\Resolvers;
+namespace Prozorov\Repositories\Resolvers;
 
-use Repositories\Contracts\{RepositoryInterface, ResolverInterface};
-use Repositories\Exceptions\CouldNotResolve;
+use Prozorov\Repositories\Contracts\{RepositoryInterface, ResolverInterface};
+use Prozorov\Repositories\Exceptions\CouldNotResolve;
 
 class HardResolver implements ResolverInterface
 {

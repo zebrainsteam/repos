@@ -3,6 +3,6 @@
 if (! function_exists('repo_query')) {
     function repo_query()
     {
-        return new \Repositories\Query();
+        return new \Prozorov\Repositories\Query();
     }
 }
