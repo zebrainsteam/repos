@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Repositories;
+namespace Prozorov\Repositories;
 
-use Repositories\Contracts\RepositoryInterface;
-use Repositories\Exceptions\DataNotFound;
-use Repositories\Exceptions\NotImplemented;
+use Prozorov\Repositories\Contracts\RepositoryInterface;
+use Prozorov\Repositories\Exceptions\DataNotFound;
+use Prozorov\Repositories\Exceptions\NotImplemented;
 
 abstract class FixturableRepository implements RepositoryInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Repositories\Tests\Support;
+namespace Prozorov\Repositories\Tests\Support;
 
 use Psr\Container\{ContainerInterface, ContainerExceptionInterface};
 use Exception;

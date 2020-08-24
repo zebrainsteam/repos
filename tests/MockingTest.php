@@ -1,6 +1,6 @@
 <?php
 
-namespace Repositories\Tests;
+namespace Prozorov\Repositories\Tests;
 
 class MockingTest extends BaseTestCase
 {

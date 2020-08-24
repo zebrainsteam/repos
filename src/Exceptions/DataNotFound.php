@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Repositories\Exceptions;
+namespace Prozorov\Repositories\Exceptions;
 
 use RuntimeException;
 

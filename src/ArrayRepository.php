@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Repositories;
+namespace Prozorov\Repositories;
 
-use Repositories\Contracts\RepositoryInterface;
-use Repositories\Query;
-use Repositories\Exceptions\{DataNotFound, RepositoryException};
-use Repositories\Helpers\DuckTyper;
+use Prozorov\Repositories\Contracts\RepositoryInterface;
+use Prozorov\Repositories\Query;
+use Prozorov\Repositories\Exceptions\{DataNotFound, RepositoryException};
+use Prozorov\Repositories\Helpers\DuckTyper;
 use Illuminate\Support\Collection;
 
 class ArrayRepository implements RepositoryInterface

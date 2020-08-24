@@ -1,10 +1,10 @@
 <?php
 
-namespace Repositories\Tests\Support;
+namespace Prozorov\Repositories\Tests\Support;
 
-use Repositories\ArrayRepository;
-use Repositories\Parameters;
-use Repositories\Result;
+use Prozorov\Repositories\ArrayRepository;
+use Prozorov\Repositories\Parameters;
+use Prozorov\Repositories\Result;
 
 class CategoryRepository extends ArrayRepository
 {

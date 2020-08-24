@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Repositories\Helpers;
+namespace Prozorov\Repositories\Helpers;
 
-use Repositories\Exceptions\InvalidDataType;
+use Prozorov\Repositories\Exceptions\InvalidDataType;
 
 class DuckTyper
 {
