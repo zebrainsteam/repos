@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Repositories\Resolvers;
+namespace Repositories\Core\Resolvers;
 
-use Repositories\Contracts\{RepositoryInterface, ResolverInterface};
-use Repositories\Exceptions\CouldNotResolve;
+use Repositories\Core\Contracts\{RepositoryInterface, ResolverInterface};
+use Repositories\Core\Exceptions\CouldNotResolve;
 use Psr\Container\{ContainerInterface, ContainerExceptionInterface};
 
 class ContainerAwareResolver implements ResolverInterface

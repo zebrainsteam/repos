@@ -1,11 +1,11 @@
 <?php
 
-namespace Repositories\Tests;
+namespace Repositories\Core\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Repositories\RepositoryFactory;
-use Repositories\Resolvers\HardResolver;
-use Repositories\Tests\Support\UserRepository;
+use Repositories\Core\RepositoryFactory;
+use Repositories\Core\Resolvers\HardResolver;
+use Repositories\Core\Tests\Support\UserRepository;
 
 class BaseTestCase extends MockeryTestCase
 {

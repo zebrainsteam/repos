@@ -1,8 +1,8 @@
 <?php
 
-namespace Repositories\Tests\Support;
+namespace Repositories\Core\Tests\Support;
 
-use Repositories\AbstractRepository;
+use Repositories\Core\AbstractRepository;
 
 class FixturableProductRepository extends AbstractRepository
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Repositories\Tests;
+namespace Repositories\Core\Tests;
 
-use Repositories\Tests\Support\UserRepository;
-use Repositories\Exceptions\CouldNotResolve;
-use Repositories\RepositoryFactory;
-use Repositories\Resolvers\HardResolver;
-use Repositories\ArrayRepository;
+use Repositories\Core\Tests\Support\UserRepository;
+use Repositories\Core\Exceptions\CouldNotResolve;
+use Repositories\Core\RepositoryFactory;
+use Repositories\Core\Resolvers\HardResolver;
+use Repositories\Core\ArrayRepository;
 
 class RepositoryFactoryTest extends BaseTestCase
 {

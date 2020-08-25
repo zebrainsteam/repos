@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Repositories\Exceptions;
+namespace Repositories\Core\Exceptions;
 
 class InvalidDataType extends RepositoryException
 {

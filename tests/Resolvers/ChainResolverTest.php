@@ -1,12 +1,12 @@
 <?php
 
-namespace Repositories\Tests\Resolvers;
+namespace Repositories\Core\Tests\Resolvers;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Repositories\Resolvers\{ChainResolver, ContainerAwareResolver, HardResolver};
-use Repositories\Contracts\{RepositoryInterface, ResolverInterface};
-use Repositories\Exceptions\CouldNotResolve;
-use Repositories\Tests\Support\UserRepository;
+use Repositories\Core\Resolvers\{ChainResolver, ContainerAwareResolver, HardResolver};
+use Repositories\Core\Contracts\{RepositoryInterface, ResolverInterface};
+use Repositories\Core\Exceptions\CouldNotResolve;
+use Repositories\Core\Tests\Support\UserRepository;
 
 class ChainResolverTest extends MockeryTestCase
 {

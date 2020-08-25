@@ -1,8 +1,8 @@
 <?php
 
-namespace Repositories;
+namespace Repositories\Core;
 
-use Repositories\Contracts\FixtureResolverInterface;
+use Repositories\Core\Contracts\FixtureResolverInterface;
 
 class ArrayFixtureResolver implements FixtureResolverInterface
 {

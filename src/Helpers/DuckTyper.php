@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Repositories\Helpers;
+namespace Repositories\Core\Helpers;
 
-use Repositories\Exceptions\InvalidDataType;
+use Repositories\Core\Exceptions\InvalidDataType;
 
 class DuckTyper
 {

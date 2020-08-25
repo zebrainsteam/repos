@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Repositories;
+namespace Repositories\Core;
 
-use Repositories\Contracts\{FixtureResolverInterface, RepositoryInterface, ResolverInterface};
-use Repositories\Exceptions\CouldNotResolve;
+use Repositories\Core\Contracts\{FixtureResolverInterface, RepositoryInterface, ResolverInterface};
+use Repositories\Core\Exceptions\CouldNotResolve;
 use Mockery;
 
 class RepositoryFactory

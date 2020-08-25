@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Repositories;
+namespace Repositories\Core;
 
-use Repositories\Contracts\RepositoryInterface;
-use Repositories\Query;
-use Repositories\Exceptions\{DataNotFound, RepositoryException};
-use Repositories\Helpers\DuckTyper;
+use Repositories\Core\Contracts\RepositoryInterface;
+use Repositories\Core\Query;
+use Repositories\Core\Exceptions\{DataNotFound, RepositoryException};
+use Repositories\Core\Helpers\DuckTyper;
 use Illuminate\Support\Collection;
 
 class ArrayRepository implements RepositoryInterface

@@ -1,9 +1,9 @@
 <?php
 
-namespace Repositories\Tests;
+namespace Repositories\Core\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Repositories\{Exceptions\CouldNotResolve,
+use Repositories\Core\{Exceptions\CouldNotResolve,
     Resolvers\SelfResolver,
     Tests\Support\CategoryModel,
     Tests\Support\CategoryRepository,
@@ -20,7 +20,7 @@ class SelfResolverTest extends MockeryTestCase
 
         $this->expectException(CouldNotResolve::class);
 
-        $resolver->resolve("Repositories\Tests\Support\WrongClass");
+        $resolver->resolve("Repositories\Core\Tests\Support\WrongClass");
     }
 
     /**

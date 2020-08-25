@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Repositories;
+namespace Repositories\Core;
 
 class Query
 {

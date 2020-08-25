@@ -1,9 +1,9 @@
 <?php
 
-namespace Repositories\Tests\Support;
+namespace Repositories\Core\Tests\Support;
 
-use Repositories\Contracts\HasRepositoryInterface;
-use Repositories\Contracts\RepositoryInterface;
+use Repositories\Core\Contracts\HasRepositoryInterface;
+use Repositories\Core\Contracts\RepositoryInterface;
 
 class CategoryModel implements HasRepositoryInterface
 {

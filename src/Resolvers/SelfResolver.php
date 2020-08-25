@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Repositories\Resolvers;
+namespace Repositories\Core\Resolvers;
 
-use Repositories\Contracts\{HasRepositoryInterface, RepositoryInterface, ResolverInterface};
-use Repositories\Exceptions\CouldNotResolve;
+use Repositories\Core\Contracts\{HasRepositoryInterface, RepositoryInterface, ResolverInterface};
+use Repositories\Core\Exceptions\CouldNotResolve;
 
 class SelfResolver implements ResolverInterface
 {
