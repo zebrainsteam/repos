@@ -28,21 +28,21 @@ interface RepositoryInterface
      * Get model by id
      *
      * @access	public
-     * @param	int  	$id
+     * @param	mixed  	$id
      * @param	array	$select	Default: null
      * @return	mixed
      */
-    public function getById(int $id, array $select = null);
+    public function getById($id, array $select = null);
 
     /**
      * Get model or fail
      *
      * @access	public
-     * @param	int  	$id    	
+     * @param	mixed  	$id    	
      * @param	array	$select	Default: null
      * @return	mixed
      */
-    public function getByIdOrFail(int $id, array $select = null);
+    public function getByIdOrFail($id, array $select = null);
 
     /**
      * Create a new record
@@ -117,4 +117,25 @@ interface RepositoryInterface
      * @return	void
      */
     public function rollbackTransaction(): void;
+
+    /**
+     * Insert multiple entries into the database. No transaction is active.
+     *
+     * @access	public
+     * @param	iterable $data
+     * @throws \Repositories\Core\Exceptions\RepositoryException
+     * @return	void
+     */
+    public function insert(iterable $data): void;
+
+    /**
+     * Insert multiple entries into the database.
+     * This operation is transaction-controlled so in case of any error all data will be rolled back.
+     *
+     * @access	public
+     * @param	iterable $data
+     * @throws \Repositories\Core\Exceptions\RepositoryException
+     * @return	void
+     */
+    public function insertWithTransaction(iterable $data): void;
 }

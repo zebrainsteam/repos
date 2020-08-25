@@ -34,4 +34,6 @@ abstract class AbstractRepository extends FixturableRepository
     abstract protected function doCommitTransaction(): void;
 
     abstract protected function doRollbackTransaction(): void;
+
+    abstract protected function doInsert(iterable $data): void;
 }

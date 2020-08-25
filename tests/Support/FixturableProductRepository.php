@@ -77,4 +77,9 @@ class FixturableProductRepository extends AbstractRepository
     {
         // No need to implement
     }
+
+    protected function doInsert(iterable $data): void
+    {
+        // No need to implement
+    }
 }

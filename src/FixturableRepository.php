@@ -7,6 +7,7 @@ namespace Repositories\Core;
 use Repositories\Core\Contracts\RepositoryInterface;
 use Repositories\Core\Exceptions\DataNotFound;
 use Repositories\Core\Exceptions\NotImplemented;
+use Repositories\Core\Exceptions\RepositoryException;
 
 abstract class FixturableRepository implements RepositoryInterface
 {
@@ -33,6 +34,8 @@ abstract class FixturableRepository implements RepositoryInterface
     abstract protected function doCommitTransaction(): void;
 
     abstract protected function doRollbackTransaction(): void;
+
+    abstract protected function doInsert(iterable $data): void;
 
     /**
      * isFake.
@@ -84,7 +87,7 @@ abstract class FixturableRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getById(int $id, array $select = null)
+    public function getById($id, array $select = null)
     {
         if ($this->isFake()) {
             return $this->fixtures()->getById($id, $select);
@@ -96,7 +99,7 @@ abstract class FixturableRepository implements RepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getByIdOrFail(int $id, array $select = null)
+    public function getByIdOrFail($id, array $select = null)
     {
         if ($this->isFake()) {
             return $this->fixtures()->getByIdOrFail($id, $select);
@@ -209,5 +212,37 @@ abstract class FixturableRepository implements RepositoryInterface
         }
 
         $this->doRollbackTransaction();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function insert(iterable $data): void
+    {
+        if ($this->isFake()) {
+            $this->fixtures()->insert($data);
+
+            return;
+        }
+
+        $this->doInsert();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function insertWithTransaction(iterable $data): void
+    {
+        $this->openTransaction();
+
+        try {
+            $this->insert($data);
+        } catch (RepositoryException $exception) {
+            $this->rollbackTransaction();
+
+            throw $exception;
+        }
+
+        $this->commitTransaction();
     }
 }

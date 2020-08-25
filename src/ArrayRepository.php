@@ -6,7 +6,7 @@ namespace Repositories\Core;
 
 use Repositories\Core\Contracts\RepositoryInterface;
 use Repositories\Core\Query;
-use Repositories\Core\Exceptions\{DataNotFound, RepositoryException};
+use Repositories\Core\Exceptions\{DataNotFound, RepositoryException, InvalidDataType};
 use Repositories\Core\Helpers\DuckTyper;
 use Illuminate\Support\Collection;
 
@@ -29,8 +29,13 @@ class ArrayRepository implements RepositoryInterface
 
     public function __construct(array $data, string $idField = 'id')
     {
-        $this->data = (new Collection($data))->keyBy('id');
+        $this->data = new Collection();
+
         $this->idField = $idField;
+
+        foreach ($data as $entry) {
+            $this->create($entry);
+        }
     }
 
     /**
@@ -38,6 +43,10 @@ class ArrayRepository implements RepositoryInterface
      */
     public function create(array $data)
     {
+        if (empty($data[$this->idField])) {
+            throw new InvalidDataType('Data set does not have a primary key ' . $this->idField);
+        }
+
         $this->data->put($data[$this->idField], $data);
     }
 
@@ -108,7 +117,7 @@ class ArrayRepository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getById(int $id, array $select = null)
+    public function getById($id, array $select = null)
     {
         return $this->data->get($id);
     }
@@ -116,7 +125,7 @@ class ArrayRepository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getByIdOrFail(int $id, array $select = null)
+    public function getByIdOrFail($id, array $select = null)
     {
         $data = $this->getById($id, $select);
 
@@ -192,5 +201,33 @@ class ArrayRepository implements RepositoryInterface
         if ($this->dataCopy === null) {
             throw new RepositoryException('No transaction has been opened');
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function insert(iterable $data): void
+    {
+        foreach ($data as $entry) {
+            $this->create($entry);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function insertWithTransaction(iterable $data): void
+    {
+        $this->openTransaction();
+
+        try {
+            $this->insert($data);
+        } catch (RepositoryException $exception) {
+            $this->rollbackTransaction();
+
+            throw $exception;
+        }
+
+        $this->commitTransaction();
     }
 }
