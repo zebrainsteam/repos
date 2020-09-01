@@ -7,7 +7,7 @@ namespace Repositories\Core\Resolvers;
 use Repositories\Core\Contracts\{HasRepositoryInterface, RepositoryInterface, ResolverInterface};
 use Repositories\Core\Exceptions\CouldNotResolve;
 
-class SelfResolver implements ResolverInterface
+class ExistingRepositoryResolver implements ResolverInterface
 {
     /**
      * @inheritDoc

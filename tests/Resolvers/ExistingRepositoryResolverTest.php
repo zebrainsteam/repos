@@ -4,19 +4,19 @@ namespace Repositories\Core\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Repositories\Core\{Exceptions\CouldNotResolve,
-    Resolvers\SelfResolver,
+    Resolvers\ExistingRepositoryResolver,
     Tests\Support\CategoryModel,
     Tests\Support\CategoryRepository,
     Tests\Support\UserModel};
 
-class SelfResolverTest extends MockeryTestCase
+class ExistingRepositoryResolverTest extends MockeryTestCase
 {
     /**
      * @test
      */
     public function exception_is_thrown_if_passed_not_existing_class()
     {
-        $resolver = new SelfResolver();
+        $resolver = new ExistingRepositoryResolver();
 
         $this->expectException(CouldNotResolve::class);
 
@@ -28,7 +28,7 @@ class SelfResolverTest extends MockeryTestCase
      */
     public function exception_is_thrown_if_resolved_without_repository()
     {
-        $resolver = new SelfResolver();
+        $resolver = new ExistingRepositoryResolver();
 
         $this->expectException(CouldNotResolve::class);
 
@@ -40,7 +40,7 @@ class SelfResolverTest extends MockeryTestCase
      */
     public function repository_is_resolved()
     {
-        $resolver = new SelfResolver();
+        $resolver = new ExistingRepositoryResolver();
 
         $this->assertInstanceOf(CategoryRepository::class, $resolver->resolve(CategoryModel::class));
     }
