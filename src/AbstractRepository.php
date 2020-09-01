@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Repositories\Core;
 
 use Repositories\Core\Contracts\RepositoryInterface;
-use Repositories\Core\{Query, Result};
 use Repositories\Core\Exceptions\DataNotFound;
 use Repositories\Core\Exceptions\NotImplemented;
 
