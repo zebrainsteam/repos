@@ -1,8 +1,8 @@
 <?php
 
-namespace Prozorov\Repositories\Tests\Support;
+namespace Repositories\Core\Tests\Support;
 
-use Prozorov\Repositories\AbstractRepository;
+use Repositories\Core\AbstractRepository;
 
 class FixturableProductRepository extends AbstractRepository
 {
@@ -74,6 +74,11 @@ class FixturableProductRepository extends AbstractRepository
     }
 
     protected function doRollbackTransaction(): void
+    {
+        // No need to implement
+    }
+
+    protected function doInsert(iterable $data): void
     {
         // No need to implement
     }

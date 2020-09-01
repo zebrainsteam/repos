@@ -1,8 +1,8 @@
 <?php
 
-namespace Prozorov\Repositories;
+namespace Repositories\Core;
 
-use Prozorov\Repositories\Contracts\FixtureResolverInterface;
+use Repositories\Core\Contracts\FixtureResolverInterface;
 
 class ArrayFixtureResolver implements FixtureResolverInterface
 {

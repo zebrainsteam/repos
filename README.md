@@ -9,6 +9,6 @@ Easy and flexible test-first data storage abstraction layer for your application
 
 ## Documentation
 
-English: in development
+English: https://github.com/artem-prozorov/repos/blob/master/docs/en/doc.md
 
 Russian: https://github.com/artem-prozorov/repos/blob/master/docs/ru/doc.md

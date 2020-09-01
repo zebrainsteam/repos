@@ -1,6 +1,6 @@
 <?php
 
-namespace Prozorov\Repositories\Tests\Support;
+namespace Repositories\Core\Tests\Support;
 
 class UserModel
 {

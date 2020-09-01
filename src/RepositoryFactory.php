@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories;
+namespace Repositories\Core;
 
-use Prozorov\Repositories\Contracts\{FixtureResolverInterface, RepositoryInterface, ResolverInterface};
-use Prozorov\Repositories\Exceptions\CouldNotResolve;
+use Repositories\Core\Contracts\{FixtureResolverInterface, RepositoryInterface, ResolverInterface};
+use Repositories\Core\Exceptions\CouldNotResolve;
 use Mockery;
 
 class RepositoryFactory

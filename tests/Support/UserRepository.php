@@ -1,10 +1,10 @@
 <?php
 
-namespace Prozorov\Repositories\Tests\Support;
+namespace Repositories\Core\Tests\Support;
 
-use Prozorov\Repositories\ArrayRepository;
-use Prozorov\Repositories\Parameters;
-use Prozorov\Repositories\Result;
+use Repositories\Core\ArrayRepository;
+use Repositories\Core\Parameters;
+use Repositories\Core\Result;
 
 class UserRepository extends ArrayRepository
 {

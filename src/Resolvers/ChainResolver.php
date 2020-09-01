@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories\Resolvers;
+namespace Repositories\Core\Resolvers;
 
-use Prozorov\Repositories\Contracts\{RepositoryInterface, ResolverInterface};
-use Prozorov\Repositories\Exceptions\CouldNotResolve;
+use Repositories\Core\Contracts\{RepositoryInterface, ResolverInterface};
+use Repositories\Core\Exceptions\CouldNotResolve;
 
 class ChainResolver implements ResolverInterface
 {

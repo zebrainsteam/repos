@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories\Contracts;
+namespace Repositories\Core\Contracts;
 
-use Prozorov\Repositories\ArrayRepository;
+use Repositories\Core\ArrayRepository;
 
 interface FixtureResolverInterface
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories\Resolvers;
+namespace Repositories\Core\Resolvers;
 
-use Prozorov\Repositories\Contracts\{HasRepositoryInterface, RepositoryInterface, ResolverInterface};
-use Prozorov\Repositories\Exceptions\CouldNotResolve;
+use Repositories\Core\Contracts\{HasRepositoryInterface, RepositoryInterface, ResolverInterface};
+use Repositories\Core\Exceptions\CouldNotResolve;
 
-class SelfResolver implements ResolverInterface
+class ExistingRepositoryResolver implements ResolverInterface
 {
     /**
      * @inheritDoc

@@ -19,12 +19,12 @@
             "helpers.php"
         ],
         "psr-4": {
-            "Prozorov\\Repositories\\": "src/"
+            "Repositories\\Core\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Prozorov\\Repositories\\Tests\\": "tests/"
+            "Repositories\\Core\\Tests\\": "tests/"
         }
     },
     "scripts": {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Prozorov\Repositories\Tests;
+namespace Repositories\Core\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Prozorov\Repositories\{ArrayRepository, Query};
-use Prozorov\Repositories\Exceptions\DataNotFound;
+use Repositories\Core\{ArrayRepository, Query};
+use Repositories\Core\Exceptions\{DataNotFound, InvalidDataType, RepositoryException};
 
 class ArrayRepositoryTest extends MockeryTestCase
 {
@@ -139,28 +139,92 @@ class ArrayRepositoryTest extends MockeryTestCase
         $this->assertEmpty($repo->getById(1));
     }
 
-    // /**
-    //  * @test
-    //  */
-    // public function transaction_is_commited()
-    // {
-    //     $repo = new ArrayRepository($this->getData());
+    /**
+     * @test
+     */
+    public function transaction_is_commited()
+    {
+        $repo = new ArrayRepository($this->getData());
 
-    //     $repo->openTransaction();
+        $repo->openTransaction();
 
-    //     $expected = [
-    //         'id' => 1,
-    //         'first_name' => 'Ivan',
-    //         'last_name' => 'Ivanov',
-    //         'position' => 'president',
-    //     ];
+        $expected = $this->getUpdatedData();
 
-    //     $repo->update(1, ['position' => 'president']);
+        $repo->update(1, ['position' => $expected['position']]);
 
-        
+        $this->assertEquals($expected, $repo->getById(1));
+    }
 
-    //     $this->assertEquals($expected, $repo->getById(1));
-    // }
+    /**
+     * @test
+     */
+    public function primary_key_can_be_set()
+    {
+        $repo = new ArrayRepository($this->getData(), 'first_name');
+
+        $this->assertEquals($this->getData()[0], $repo->getById('Ivan'));
+        $this->assertEquals($this->getData()[1], $repo->getById('Petr'));
+    }
+
+    /**
+     * @test
+     */
+    public function exception_is_thrown_if_primary_key_not_found()
+    {
+        $this->expectException(InvalidDataType::class);
+
+        $repo = new ArrayRepository($this->getData(), 'non-existent key');
+    }
+
+    /**
+     * @test
+     */
+    public function data_is_inserted()
+    {
+        $repo = new ArrayRepository($this->getData());
+
+        $insertion = $this->getDataForInsertion();
+
+        $repo->insert($insertion);
+
+        $this->assertEquals(5, $repo->count());
+        $this->assertEquals($insertion[0], $repo->getById(5));
+        $this->assertEquals($insertion[1], $repo->getById(6));
+    }
+
+    /**
+     * @test
+     */
+    public function data_is_inserted_with_transaction()
+    {
+        $repo = new ArrayRepository($this->getData());
+
+        $repo->insertWithTransaction($this->getDataForInsertion());
+
+        $this->assertEquals(5, $repo->count());
+    }
+
+    /**
+     * @test
+     */
+    public function insert_with_transaction_rolls_back_data_in_case_of_error()
+    {
+        $repo = new ArrayRepository($this->getData());
+
+        $invalidInsertion = $this->getDataForInsertion();
+
+        $invalidInsertion[1]['id'] = false;
+
+        try {
+            $repo->insertWithTransaction($invalidInsertion);
+        } catch (RepositoryException $exception) {
+            $this->assertEquals(3, $repo->count());
+
+            return;
+        }
+
+        $this->fail();
+    }
 
     /**
      * getData.
@@ -205,6 +269,30 @@ class ArrayRepositoryTest extends MockeryTestCase
             'first_name' => 'Ivan',
             'last_name' => 'Ivanov',
             'position' => 'president',
+        ];
+    }
+
+    /**
+     * getDataForInsertion.
+     *
+     * @access	protected
+     * @return	array
+     */
+    protected function getDataForInsertion(): array
+    {
+        return [
+            [
+                'id' => 5,
+                'first_name' => 'Andrey',
+                'last_name' => 'Rodov',
+                'position' => 'driver',
+            ],
+            [
+                'id' => 6,
+                'first_name' => 'Mikhail',
+                'last_name' => 'Potapov',
+                'position' => 'driver',
+            ],
         ];
     }
 }

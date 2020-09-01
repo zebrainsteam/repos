@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Prozorov\Repositories;
+namespace Repositories\Core;
 
-use Prozorov\Repositories\Contracts\RepositoryInterface;
-use Prozorov\Repositories\{Query, Result};
-use Prozorov\Repositories\Exceptions\DataNotFound;
-use Prozorov\Repositories\Exceptions\NotImplemented;
+use Repositories\Core\Contracts\RepositoryInterface;
+use Repositories\Core\Exceptions\DataNotFound;
+use Repositories\Core\Exceptions\NotImplemented;
 
 abstract class AbstractRepository extends FixturableRepository
 {
@@ -34,4 +33,6 @@ abstract class AbstractRepository extends FixturableRepository
     abstract protected function doCommitTransaction(): void;
 
     abstract protected function doRollbackTransaction(): void;
+
+    abstract protected function doInsert(iterable $data): void;
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Prozorov\Repositories\Tests;
+namespace Repositories\Core\Tests;
 
-use Prozorov\Repositories\Tests\Support\UserRepository;
-use Prozorov\Repositories\Exceptions\CouldNotResolve;
-use Prozorov\Repositories\RepositoryFactory;
-use Prozorov\Repositories\Resolvers\HardResolver;
-use Prozorov\Repositories\ArrayRepository;
+use Repositories\Core\Tests\Support\UserRepository;
+use Repositories\Core\Exceptions\CouldNotResolve;
+use Repositories\Core\RepositoryFactory;
+use Repositories\Core\Resolvers\HardResolver;
+use Repositories\Core\ArrayRepository;
 
 class RepositoryFactoryTest extends BaseTestCase
 {

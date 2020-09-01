@@ -1,9 +1,9 @@
 <?php
 
-namespace Prozorov\Repositories\Tests\Support;
+namespace Repositories\Core\Tests\Support;
 
-use Prozorov\Repositories\Contracts\HasRepositoryInterface;
-use Prozorov\Repositories\Contracts\RepositoryInterface;
+use Repositories\Core\Contracts\HasRepositoryInterface;
+use Repositories\Core\Contracts\RepositoryInterface;
 
 class CategoryModel implements HasRepositoryInterface
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Prozorov\Repositories\Tests;
+namespace Repositories\Core\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Prozorov\Repositories\RepositoryFactory;
-use Prozorov\Repositories\Resolvers\HardResolver;
-use Prozorov\Repositories\Tests\Support\UserRepository;
+use Repositories\Core\RepositoryFactory;
+use Repositories\Core\Resolvers\HardResolver;
+use Repositories\Core\Tests\Support\UserRepository;
 
 class BaseTestCase extends MockeryTestCase
 {

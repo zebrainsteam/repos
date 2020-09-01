@@ -1,11 +1,11 @@
 <?php
 
-namespace Prozorov\Repositories\Tests;
+namespace Repositories\Core\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Prozorov\Repositories\{Query, RepositoryFactory};
-use Prozorov\Repositories\Resolvers\HardResolver;
-use Prozorov\Repositories\Tests\Support\FixturableProductRepository;
+use Repositories\Core\{Query, RepositoryFactory};
+use Repositories\Core\Resolvers\HardResolver;
+use Repositories\Core\Tests\Support\FixturableProductRepository;
 
 class FakableTest extends MockeryTestCase
 {
