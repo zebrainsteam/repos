@@ -7,6 +7,10 @@
 
 Easy and flexible test-first data storage abstraction layer for your application. No hard dependencies for any framework!
 
+## Installation
+
+`composer require prozorov/repositories`
+
 ## Documentation
 
 English: https://github.com/artem-prozorov/repos/blob/master/docs/en/doc.md
