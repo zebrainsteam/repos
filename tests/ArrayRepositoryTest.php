@@ -169,16 +169,6 @@ class ArrayRepositoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function exception_is_thrown_if_primary_key_not_found()
-    {
-        $this->expectException(InvalidDataType::class);
-
-        $repo = new ArrayRepository($this->getData(), 'non-existent key');
-    }
-
-    /**
-     * @test
-     */
     public function data_is_inserted()
     {
         $repo = new ArrayRepository($this->getData());
@@ -209,14 +199,19 @@ class ArrayRepositoryTest extends MockeryTestCase
      */
     public function insert_with_transaction_rolls_back_data_in_case_of_error()
     {
-        $repo = new ArrayRepository($this->getData());
+        $repo = \Mockery::mock(ArrayRepository::class);
 
-        $invalidInsertion = $this->getDataForInsertion();
+        $repo->makePartial();
 
-        $invalidInsertion[1]['id'] = false;
+        $repo->init($this->getData());
+        
+        $repo->shouldReceive('create')
+            ->andThrow(RepositoryException::class, 'Some error occured');
+
+        $insertion = $this->getDataForInsertion();
 
         try {
-            $repo->insertWithTransaction($invalidInsertion);
+            $repo->insertWithTransaction($insertion);
         } catch (RepositoryException $exception) {
             $this->assertEquals(3, $repo->count());
 

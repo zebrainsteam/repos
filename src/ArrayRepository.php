@@ -29,6 +29,19 @@ class ArrayRepository implements RepositoryInterface
 
     public function __construct(array $data, string $idField = 'id')
     {
+        $this->init($data, $idField);
+    }
+
+    /**
+     * Initializes repository
+     * 
+     * @access	public
+     * @param	array 	$data
+     * @param	string	$idField	Default: 'id'
+     * @return	void
+     */
+    public function init(array $data, string $idField = 'id'): void
+    {
         $this->data = new Collection();
 
         $this->idField = $idField;
@@ -44,10 +57,14 @@ class ArrayRepository implements RepositoryInterface
     public function create(array $data)
     {
         if (empty($data[$this->idField])) {
-            throw new InvalidDataType('Data set does not have a primary key ' . $this->idField);
+            $currentKeys = $this->data->keys()->toArray();
+
+            $data[$this->idField] = empty($currentKeys) ? 1 : (max($currentKeys) + 1);
         }
 
         $this->data->put($data[$this->idField], $data);
+
+        return $data;
     }
 
     /**
