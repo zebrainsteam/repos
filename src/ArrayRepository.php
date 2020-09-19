@@ -8,12 +8,11 @@ use Repositories\Core\Contracts\RepositoryInterface;
 use Repositories\Core\Query;
 use Repositories\Core\Exceptions\{DataNotFound, RepositoryException, InvalidDataType};
 use Repositories\Core\Helpers\DuckTyper;
-use Illuminate\Support\Collection;
 
 class ArrayRepository implements RepositoryInterface
 {
     /**
-     * @var Collection $data
+     * @var array $data
      */
     protected $data;
 
@@ -23,7 +22,7 @@ class ArrayRepository implements RepositoryInterface
     protected $idField;
 
     /**
-     * @var Collection $dataCopy
+     * @var array $dataCopy
      */
     protected $dataCopy;
 
@@ -42,8 +41,6 @@ class ArrayRepository implements RepositoryInterface
      */
     public function init(array $data, string $idField = 'id'): void
     {
-        $this->data = new Collection();
-
         $this->idField = $idField;
 
         foreach ($data as $entry) {
@@ -57,12 +54,12 @@ class ArrayRepository implements RepositoryInterface
     public function create(array $data)
     {
         if (empty($data[$this->idField])) {
-            $currentKeys = $this->data->keys()->toArray();
+            $currentKeys = array_keys($this->data);
 
             $data[$this->idField] = empty($currentKeys) ? 1 : (max($currentKeys) + 1);
         }
 
-        $this->data->put($data[$this->idField], $data);
+        $this->data[$data[$this->idField]] = $data;
 
         return $data;
     }
@@ -74,9 +71,9 @@ class ArrayRepository implements RepositoryInterface
     {
         $id = is_int($model) ? $model : DuckTyper::getId($model, $this->idField);
 
-        $model = $this->data->get($id);
+        $model = $this->data[$id] ?? null;
 
-        $this->data->put($model[$this->idField], array_merge($model, $data));
+        $this->data[$model[$this->idField]] = array_merge($model, $data);
     }
 
     /**
@@ -86,7 +83,7 @@ class ArrayRepository implements RepositoryInterface
     {
         $id = is_int($model) ? $model : DuckTyper::getId($model, $this->idField);
 
-        $this->data->forget($id);
+        unset($this->data[$id]);
     }
 
     /**
@@ -136,7 +133,7 @@ class ArrayRepository implements RepositoryInterface
      */
     public function getById($id, array $select = null)
     {
-        return $this->data->get($id);
+        return $this->data[$id] ?? null;
     }
 
     /**
@@ -162,7 +159,7 @@ class ArrayRepository implements RepositoryInterface
             throw new RepositoryException('Array repository does not support nested transactions');
         }
 
-        $this->dataCopy = clone $this->data;
+        $this->dataCopy = $this->data;
     }
 
     /**
@@ -192,7 +189,7 @@ class ArrayRepository implements RepositoryInterface
      *
      * @access	protected
      * @param	Query	$query	
-     * @return	iterable|null
+     * @return	array|null
      */
     protected function getRaw(Query $query)
     {
@@ -200,11 +197,17 @@ class ArrayRepository implements RepositoryInterface
 
         if (! empty($query->getWhere())) {
             foreach ($query->getWhere() as $key => $value) {
-                $data = $this->data->where($key, $value);
+                $data = array_filter($this->data, function($item) use ($key, $value) {
+                    return $item[$key] === $value;
+                });
             }
         }
 
-        return $data->values()->toArray();
+        if(empty($data)) {
+            return null;
+        }
+
+        return array_values($data);
     }
 
     /**
